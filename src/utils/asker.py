@@ -1,3 +1,53 @@
+from utils.logger import Logger
+
 class Asker:
     def __init__(self):
-        pass
+        self.__steps = [
+            {
+                "label": "A file",
+                "steps": [
+                    {
+                        "label": "The file's location",
+                        "value": None
+                    }
+                ]
+            }
+        ]
+
+        self.logger = Logger()
+
+    def __ask(self, options=None, question=None):
+        if not question:
+            self.logger.log("Insert a question!", "ERROR")
+            return
+
+        if not options:
+            # gestire domande senza una lista di opzioni fra qui scegliere
+            return
+
+        while True:
+            for index, key in enumerate(options):
+                values = options[index]
+                label = values["label"]
+
+                print(f"[{index + 1}] - {label}")
+            
+            try:
+                choice = int(input(f"{question}\n> "))
+
+                if 0 < choice and choice <= len(options):
+                    break
+                
+                print("Please insert a valid option\n")
+            except ValueError:
+                print("Please insert a valid option\n")
+
+        self.logger.log(f"Registered choice. Q: {question}, A: {choice}")
+        return choice
+
+    def run(self):
+        self.logger.log("Asker dialog started")
+        print("Welcome in BitLockiPy, a file encryption tool by zerokelvin\n\nPlease choose what you want to encrypt from below.")
+        
+        # gestire il return
+        self.__ask(self.__steps, "Choose what you want to encrypt")
