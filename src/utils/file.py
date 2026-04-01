@@ -16,4 +16,4 @@ class File:
 
     def append(self, content):
         with open(self.path, "a") as f:
-            f.write(content)
+            f.write(f"{content}\n")
