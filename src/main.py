@@ -1,8 +1,10 @@
-from colorama import Fore
-from utils import file, logger
+from utils.file import File
+from utils.logger import Logger
+from utils.asker import Asker
+from configs import Configs
 
-logger = logger.Logger()
+configs = Configs()
+logger = Logger()
+asker = Asker()
 
-logger.test_colors()
-
-file = file.File("aaa")
+asker.run()
