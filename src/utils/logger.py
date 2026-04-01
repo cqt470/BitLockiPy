@@ -41,7 +41,7 @@ class Logger:
     def __create_log_file(self):
         if not self.log_file.check_exists():
             self.log_file.create()
-            self.log(f"File di log creato in {self.log_path}")
+            self.log(f"Log file created at {self.log_path}")
 
     def __get_text(self, message, severity, formatted=True):
         severity = str(severity).upper()
