@@ -8,9 +8,12 @@ class File:
         
         self.path = path
 
-        if not self.check_exists():
-            print(Fore.YELLOW + f"Warning: The file '{self.path}' does not exist." + Fore.RESET)
-            exit
-
     def check_exists(self):
         return os.path.exists(self.path)
+    
+    def create(self):
+        open(self.path, "w").close()
+
+    def append(self, content):
+        with open(self.path, "a") as f:
+            f.write(content)
