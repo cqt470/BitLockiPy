@@ -3,7 +3,7 @@ from utils.file import File
 from encrypt.encrypter import Encrypter
 
 class Asker:
-    def __init__(self):
+    def __init__(self, configs):
         self.__steps = [
             {
                 "label": "A file",
@@ -17,7 +17,7 @@ class Asker:
         ]
 
         self.logger = Logger()
-        self.encrypter = Encrypter()
+        self.encrypter = Encrypter(configs)
 
     def __ask(self, options=None, question=None):
         if not question:
@@ -54,9 +54,31 @@ class Asker:
         self.logger.log(f"Registered choice. Q: {question}, A: {choice}")
         return choice
 
+    def __handle_file(self, question=None):
+        if not question:
+            self.logger.log("Insert a question!", "ERROR")
+            return
+        
+        while True:
+            file_location = self.__ask(question=question)
+            file = File(file_location)
+
+            if file.check_exists():
+                break
+
+            print("File not found, please insert a valid file location\n")
+
+        self.logger.log(f"Registered file location: {file_location}")
+
+        return file_location
+
     def run(self):
         self.logger.log("Asker dialog started")
         print("Welcome in BitLockiPy, a file encryption tool by zerokelvin\n\nPlease choose what you want to encrypt from below.")
         
-        # gestire il return
-        self.__ask(self.__steps, "Choose what you want to encrypt")
+        type = self.__ask(self.__steps, "Choose what you want to encrypt")
+        
+        if type == 1:
+            file_location = self.__handle_file(question="File's location:")
+            self.encrypter.encrypt_file(file_location)
+            print("Your file has been encrypted successfully.")

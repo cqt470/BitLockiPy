@@ -5,6 +5,6 @@ from configs import Configs
 
 configs = Configs()
 logger = Logger()
-asker = Asker()
+asker = Asker(configs)
 
 asker.run()
