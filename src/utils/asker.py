@@ -1,4 +1,6 @@
 from utils.logger import Logger
+from utils.file import File
+from encrypt.encrypter import Encrypter
 
 class Asker:
     def __init__(self):
@@ -15,6 +17,7 @@ class Asker:
         ]
 
         self.logger = Logger()
+        self.encrypter = Encrypter()
 
     def __ask(self, options=None, question=None):
         if not question:
@@ -22,7 +25,13 @@ class Asker:
             return
 
         if not options:
-            # gestire domande senza una lista di opzioni fra qui scegliere
+            while True:
+                answer = input(f"{question}\n> ")
+
+                if answer:
+                    return answer
+                
+                print("Please insert a valid answer\n")
             return
 
         while True:
